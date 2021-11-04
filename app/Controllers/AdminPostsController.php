@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\PostModel;
 
 class AdminPostsController extends BaseController
 {
@@ -39,7 +40,7 @@ class AdminPostsController extends BaseController
 				"rules" => "required|is_unique[posts.slug]",
 				"errors" => [
 					"required" => "{field} Harus Diisi!",
-					"is_unique" => "{filed} sudah ada!"
+					"is_unique" => "{field} sudah ada!"
 				]
 			],
 			"kategori" => [
@@ -81,5 +82,33 @@ class AdminPostsController extends BaseController
 			return redirect()->to(base_url('/admin/posts/create'))->withInput()->with('validation', $this->validator);
 		}
 		// return view("posts/store");
+	}
+
+	public function edit($post_id)
+	{
+		$postmodel = new PostModel();
+		$datas ['postmodel'] = $postmodel->find($post_id);
+		return view('posts/edit', $datas);
+	}
+
+	public function update($post_id)
+	{
+		$postmodel = new PostModel();
+		$data = [
+			'judul' => $this->request->getVar('judul'),
+			'slug' => $this->request->getVar('slug'),
+			'kategori' => $this->request->getVar('kategori'),
+			'author' => $this->request->getVar('author'),
+			'deskripsi' => $this->request->getVar('deskripsi'),
+		];
+		$postmodel->update($post_id, $data);
+		return redirect()->to(base_url('/admin/posts/'));
+	}
+	
+	public function delete($post_id)
+	{
+		$postmodel = new PostModel();
+		$postmodel->delete($post_id);
+		return redirect()->to(base_url('/admin/posts/'));
 	}
 }

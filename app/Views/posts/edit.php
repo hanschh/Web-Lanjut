@@ -203,7 +203,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">My Post</h1>
+                            <h1 class="m-0">Tambah Post</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -216,43 +216,51 @@
             </div>
             <!-- /.content-header -->
             <!-- Main Content -->
+
             <div class="container">
-                <a href="/admin/posts/create" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data</a>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Judul</th>
-                                <th scope="col">slug</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Kategori</th>
-                                <th scope="col">action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          <?php foreach ($posts as $i => $post) : ?>
-                            <tr>
-                                <th scope="row"><?= $i + 1; ?></th>
-                                <td><?= $post['judul']; ?></td>
-                                <td><?= $post['slug']; ?></td>
-                                <td><?= $post['author']; ?></td>
-                                <td><?= $post['kategori']; ?></td>
-                                <td>
-                                    <a href="<?= base_url('admin/posts/edit/' .$post['post_id'])?>" class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"> Edit</i></a>
-                                    <a href="<?= base_url('admin/posts/delete/' .$post['post_id']) ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"> Delete</i></a>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        Form Edit Post
+                    </div>
+                    <div class="card-body">
+                        <form action="<?= base_url('admin/posts/update/' .$postmodel['post_id']) ?>" method="post">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="judul">Judul Postingan</label>
+                                        <input type="text" class="form-control" id="judul" name="judul" value="<?= $postmodel['judul'] ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="judul">Slug</label>
+                                        <input type="text" class="form-control" id="slug" name="slug" value="<?= $postmodel['slug'] ?>">
+                                            
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="judul">Kategori Postingan</label>
+                                        <input type="text" class="form-control" id="kategori" name="kategori" value="<?= $postmodel['kategori'] ?>">
+                                       
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="judul">Author</label>
+                                        <input type="text" class="form-control" id="author" name="author" value="<?= $postmodel['author'] ?>">
+                                        
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i> Update
+                                    </button>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="deskripsi">Deskripsi Postingan</label>
+                                    <br>
+                                    <textarea name="deskripsi" id="deskripsi"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!--bakal dirubah -->
             </section>
-
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
@@ -269,3 +277,10 @@
     <!-- ./wrapper -->
 
     <?= $this->endSection(); ?>
+
+    <?php $this->section('myscript'); ?>
+    <script>
+        $('#deskripsi').summernote()
+    </script>
+
+    <?php $this->endSection(); ?>
